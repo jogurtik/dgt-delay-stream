@@ -1,7 +1,6 @@
-# dgt-delay-stream
-Delay an DGT LiveChess stream from digital chess boards with this app
-
 <h1>DGT Delay stream</h1>
+
+Delay an DGT LiveChess stream from digital chess boards with this app
 
 <h2>Download</h2>
 <p>
