@@ -7,9 +7,9 @@ Delay an DGT LiveChess stream from digital chess boards with this app
 <a href="http://dgtlivechessdelay.jogo.sk/dgtlivechessdelay.zip">download here</a>
 </p>
 
-<h2>How this script is working</h2>
+<h2>How this java application is working</h2>
 <p>
-There are two possibilities how to use this script.<BR>
+There are two possibilities how to use this java application.<BR>
 First one:
 <ul>
 <li>DGT Livechess will run on local computer</li>
