@@ -79,3 +79,8 @@ Second one:
 <ul>
 <li>Check this manual how to do it: <a href="https://www.howtogeek.com/140352/how-to-host-an-ftp-server-on-windows-with-filezilla/" target="new">https://www.howtogeek.com/140352/how-to-host-an-ftp-server-on-windows-with-filezilla/</a></li>
 </ul>
+
+<h2>Usefull applications</h2>
+<ul>
+<li>DGT Delay stream log analyser - <a href="https://github.com/jogurtik/dgt-delay-stream-log-analyser">https://github.com/jogurtik/dgt-delay-stream-log-analyser</a></li>
+</ul>
