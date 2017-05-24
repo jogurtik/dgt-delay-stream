@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+    <!--
+        NOTES:
+        Please keep this file as small as possible. Originally I plan to remove all of xml files for Spring.
+        But, due to a bug in jersey-spring3 (https://java.net/jira/browse/JERSEY-2038), we have to keep an applicationContext.xml
+        for jersey-spring3.
+
+        In future, we will remove this file once the bug is fixed.
+    -->
+    <context:component-scan base-package="com.jogo"/>
+    <context:property-placeholder location="file:dgt-delay-stream.properties" order="-1" ignore-unresolvable="true" ignore-resource-not-found="true" />
+    <context:property-placeholder location="classpath:app.properties" />
+
+</beans>
