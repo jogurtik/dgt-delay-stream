@@ -29,14 +29,14 @@ public class FileModifications {
 
         FileStamp stamp = findFile(file);
         if (stamp == null) {
-            logger.info("FileModifications check: file is uploaded first time");
+            logger.debug("FileModifications check: file is uploaded first time");
             change = true;
         } else {
             if(stamp.getLastModified() != file.lastModified()) {
-                logger.info("FileModifications check: lastModified changed");
+                logger.debug("FileModifications check: lastModified changed");
                 change = true;
             } else if(!stamp.getChecksum().equals(getChecksum(file))) {
-                logger.info("FileModifications check: Checksum changed");
+                logger.debug("FileModifications check: Checksum changed");
                 //logger.info("["+stamp.getChecksum()+"] - ["+getChecksum(file)+"]");
                 change = true;
             }

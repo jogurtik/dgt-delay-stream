@@ -2,11 +2,6 @@
 
 Delay an DGT LiveChess stream from digital chess boards with this app
 
-<h2>Download</h2>
-<p>
-<a href="http://dgtlivechessdelay.jogo.sk/dgtlivechessdelay.zip">download here</a>
-</p>
-
 <h2>How this java application is working</h2>
 <p>
 There are two possibilities how to use this java application.<BR>
@@ -83,4 +78,16 @@ Second one:
 <h2>Usefull applications</h2>
 <ul>
 <li>DGT Delay stream log analyser - <a href="https://github.com/jogurtik/dgt-delay-stream-log-analyser">https://github.com/jogurtik/dgt-delay-stream-log-analyser</a></li>
+</ul>
+
+<h2>Changes</h2>
+<ul>
+version 1.0.1:
+<li>fixing slashes in properties file in paths</li>
+<li>shrinking informations logged into log file</li>
+<li>changing some log messages</li>
+</ul>
+<ul>
+version 1.0.0:
+<li>Initial release</li>
 </ul>

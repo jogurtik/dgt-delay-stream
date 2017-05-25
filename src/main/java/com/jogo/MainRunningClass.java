@@ -124,7 +124,7 @@ public class MainRunningClass {
         if (oldest.isEmpty()) {
             workingDir = "";
             found = false;
-            logger.info("Directory for publishing not found");
+            logger.info("Check of backup directory finished, nothing more to publish");
         } else {
             workingDir = oldest;
             found = true;

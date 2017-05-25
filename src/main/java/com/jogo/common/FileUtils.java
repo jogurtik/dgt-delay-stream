@@ -50,7 +50,7 @@ public class FileUtils {
             }
 
             // The directory is now empty or this is a file so delete it
-            logger.info("DELETING [" + dir.getAbsolutePath() + "]");
+            logger.debug("DELETING [" + dir.getAbsolutePath() + "]");
             dir.delete();
         } else {
             // Deleting file

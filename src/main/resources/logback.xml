@@ -16,7 +16,7 @@
         </layout>
     </appender>
 
-    <logger name="com.jogo" level="DEBUG">
+    <logger name="com.jogo" level="INFO">
     </logger>
     <!--<logger name="org.apache.http" level="DEBUG"></logger>-->
     <root level="WARN">

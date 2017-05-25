@@ -16,6 +16,13 @@ public class AppProperties {
     }
 
     public void setDirectoryPublish(String directoryPublish) {
+        for(int ii = 1; ii < 50; ii++) {
+            directoryPublish = directoryPublish.replace("\\", "/");
+            directoryPublish = directoryPublish.replace("//", "/");
+        }
+        for(int ii = 1; ii < 50; ii++) {
+            directoryPublish = directoryPublish.replace("/", "\\");
+        }
         this.directoryPublish = directoryPublish;
     }
 
@@ -24,6 +31,13 @@ public class AppProperties {
     }
 
     public void setDirectoryLiveChess(String directoryLiveChess) {
+        for(int ii = 1; ii < 50; ii++) {
+            directoryLiveChess = directoryLiveChess.replace("\\", "/");
+            directoryLiveChess = directoryLiveChess.replace("//", "/");
+        }
+        for(int ii = 1; ii < 50; ii++) {
+            directoryLiveChess = directoryLiveChess.replace("/", "\\");
+        }
         this.directoryLiveChess = directoryLiveChess;
     }
 
@@ -32,6 +46,13 @@ public class AppProperties {
     }
 
     public void setDirectoryBackup(String directoryBackup) {
+        for(int ii = 1; ii < 50; ii++) {
+            directoryBackup = directoryBackup.replace("\\", "/");
+            directoryBackup = directoryBackup.replace("//", "/");
+        }
+        for(int ii = 1; ii < 50; ii++) {
+            directoryBackup = directoryBackup.replace("/", "\\");
+        }
         this.directoryBackup = directoryBackup;
     }
 
@@ -96,6 +117,10 @@ public class AppProperties {
     }
 
     public void setFtpOnlyPgn(String ftpOnlyPgn) {
+        for(int ii = 1; ii < 50; ii++) {
+            ftpOnlyPgn = ftpOnlyPgn.replace("\\", "/");
+            ftpOnlyPgn = ftpOnlyPgn.replace("//", "/");
+        }
         this.ftpOnlyPgn = ftpOnlyPgn;
     }
 

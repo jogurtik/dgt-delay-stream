@@ -60,15 +60,15 @@ public class FtpServer {
             }
             if (appProperties.getFtpActive() == "true") {
                 ftp.enterLocalActiveMode();
-                logger.info("Entering active ftp mode");
+                logger.debug("Entering active ftp mode");
             } else {
                 ftp.enterLocalPassiveMode();
-                logger.info("Entering passive ftp mode");
+                logger.debug("Entering passive ftp mode");
             }
 
             ftp.login(appProperties.getFtpLogin(), appProperties.getFtpPassword());
             logger.info("Connected to server " + appProperties.getFtpServer());
-            logger.info(ftp.getReplyString());
+            logger.debug(ftp.getReplyString());
 
             ftp.changeWorkingDirectory(appProperties.getFtpDirectory());
 
@@ -80,7 +80,7 @@ public class FtpServer {
         //logger.info("Check FTP publishing " + src.getAbsolutePath());
         if (src.isDirectory()) {
             Connect(ftp);
-            logger.info("FTP publishing " + src.getAbsolutePath());
+            logger.debug("FTP publishing " + src.getAbsolutePath());
             ftp.makeDirectory(src.getName());
             ftp.changeWorkingDirectory(src.getName());
             for (File file : src.listFiles()) {
@@ -91,7 +91,7 @@ public class FtpServer {
         else {
             if(fileModifications.checkChange(src)) {
                 Connect(ftp);
-                logger.info("FTP publishing " + src.getAbsolutePath() + " size: " + src.length() + "b");
+                logger.info("FTP publishing " + src.getName() + " size: " + src.length() + "b");
                 InputStream srcStream = null;
                 try {
                     // srcStream = src.toURI().toURL().openStream();
@@ -103,7 +103,7 @@ public class FtpServer {
                     //IOUtils.closeQuietly(srcStream);
                 }
             } else {
-                logger.info("FTP ignored, not changed: " + src.getAbsolutePath() + " size: " + src.length() + "b");
+                logger.debug("FTP ignored, not changed: " + src.getAbsolutePath() + " size: " + src.length() + "b");
             }
         }
     }
