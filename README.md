@@ -1,4 +1,4 @@
-<h1>Online streaming</h1>
+<h1>Chess online streaming</h1>
 This application is provided by slovakian online chess streaming team. We are an team, 
 which is making online chess streaming. We are fully profesionals and we can also get a lot of chess boards
 <h3>Contacts regarding making an online chess stream:</h3> 
