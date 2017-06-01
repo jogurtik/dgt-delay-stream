@@ -80,18 +80,21 @@ Second one:
 <li>DGT Delay stream log analyser - <a href="https://github.com/jogurtik/dgt-delay-stream-log-analyser">https://github.com/jogurtik/dgt-delay-stream-log-analyser</a></li>
 </ul>
 
+
 <h2>This application is provided by slovakian online chess team</h2>
 
 <h3>Contacts regarding making an online chess stream:</h3> 
 Bury Rastislav (bury.rastislav@gmail.com), Dobrotka Martin, Pekar Karol, Palecek Peter, Diviak Rastislav
 
 <h3>Our history of making live chess streams:</h3>
-2017, BLR, Minsk, <b>European Individual Chess Championship 2017</b>, 100 boards
-2017, BLR, Minsk, <b>1st World Cadet Rapid Chess Championship 2017</b>, 100 boards
-2017, BLR, Minsk, <b>1st World Cadet Blitz Chess Championship 2017</b>, 100 boards
-2017, SVK, Ruzomberok, <b>The 17th IPCA World Individual Chess Championship</b>, 12 boards
-2017, CZE, Kouty nad Desnou, Czech youth chess championship Kouty 2017, 50 boards
-2011-2017, SVK, Various cities, Extraliga - Slovak team championship, 48 boards
+<ul>
+<li>2017, BLR, Minsk, <b>European Individual Chess Championship 2017</b>, 100 boards</li>       
+<li>2017, BLR, Minsk, <b>1st World Cadet Rapid Chess Championship 2017</b>, 100 boards</li>
+<li>2017, BLR, Minsk, <b>1st World Cadet Blitz Chess Championship 2017</b>, 100 boards</li>
+<li>2017, SVK, Ruzomberok, <b>The 17th IPCA World Individual Chess Championship</b>, 12 boards</li>
+<li>2017, CZE, Kouty nad Desnou, Czech youth chess championship Kouty 2017, 50 boards</li>
+<li>2011-2017, SVK, Various cities, Extraliga - Slovak team championship, 48 boards</li>
+<ul>
 
 2016, CZE, Marienbad, <b>26th World Senior Chess Championship 2016</b>, 100 boards
 2016, CZE, Prague, <b>European Youth Chess Championship Prague 2016</b>, 100 boards
