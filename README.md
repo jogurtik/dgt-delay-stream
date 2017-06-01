@@ -80,6 +80,50 @@ Second one:
 <li>DGT Delay stream log analyser - <a href="https://github.com/jogurtik/dgt-delay-stream-log-analyser">https://github.com/jogurtik/dgt-delay-stream-log-analyser</a></li>
 </ul>
 
+<h2>This application is provided by slovakian online chess team</h2>
+
+<h3>Contacts regarding making an online chess stream:</h3> 
+Bury Rastislav (bury.rastislav@gmail.com), Dobrotka Martin, Pekar Karol, Palecek Peter, Diviak Rastislav
+
+<h3>Our history of making live chess streams:</h3>
+2017, BLR, Minsk, <b>European Individual Chess Championship 2017</b>, 100 boards
+2017, BLR, Minsk, <b>1st World Cadet Rapid Chess Championship 2017</b>, 100 boards
+2017, BLR, Minsk, <b>1st World Cadet Blitz Chess Championship 2017</b>, 100 boards
+2017, SVK, Ruzomberok, <b>The 17th IPCA World Individual Chess Championship</b>, 12 boards
+2017, CZE, Kouty nad Desnou, Czech youth chess championship Kouty 2017, 50 boards
+2011-2017, SVK, Various cities, Extraliga - Slovak team championship, 48 boards
+
+2016, CZE, Marienbad, <b>26th World Senior Chess Championship 2016</b>, 100 boards
+2016, CZE, Prague, <b>European Youth Chess Championship Prague 2016</b>, 100 boards
+2016, SVK, Poprad, <b>FIDE World Youth U16 Chess Olympiad SLOVAKIA 2016</b>, 100 boards
+2016, CZE, Kouty nad Desnou, <b>European Union Youth Championship</b>, 50 boards
+2016, CZE, Kouty nad Desnou, Czech republic youth chess championship Kouty 2016, 50 boards
+2016, CZE, Olomouc, Olomouc Chess Summer 2016, 20 boards
+2016, CZE, Prague, Summer Prague 2016, 12 boards
+
+2015, SVK, Bratislava, <b>IPCA World Individual Chess Championship 2015</b>, 60 boards
+2015, CZE, Kouty nad Desnou, <b>European Union Youth Championship</b>, 50 boards
+2015, CZE, Prague, Summer Prague 2015, 16 boards
+2015, CZE, Pardubice, Czech Open 2015 + some accompanying tournaments, 100 boards
+
+2014, HUN, Gyor, <b>World Youth U-16 Chess Olympiad 2014</b>, 108 boards
+2014, CZE, Kouty nad Desnou, <b>European Union Youth Championship</b>, 50 boards
+2014, SVK, Ruzomberok, <b>33rd MITROPA Cup 2014</b>, 30 boards
+2014, CZE, Pardubice, Czech Open 2014 + some accompanying tournaments, 100 boards
+
+2013, CZE, Malenovice, <b>European Union Youth Championship</b>, 50 boards
+2013, CZE, Pardubice, Czech Open A 2013 + some accompanying tournaments, 100 boards
+
+2012, CZE, Prague, <b>European Youth Chess Championship Prague 2012</b>, 100 boards
+
+2011, SVK, Piestany, <b>IPCA World Championship 2011</b>, 50 boards
+2011-2017, SVK, Various cities, Slovakian Youth Chess Championships, 62 boards
+2011-2017, SVK, Various cities, Slovakian Championships, 50 boards
+2010, SVK, Banska Stiavnica, Slovakian Championships, 16 boards
+2007-2010, SVK, Various cities, Slovakian Youth Chess Championships, 16 boards
+
+and <b>various other slovak chess tournaments</b> 
+
 <h2>Changes</h2>
 <ul>
 version 1.0.1:
