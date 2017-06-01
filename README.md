@@ -81,8 +81,9 @@ Second one:
 </ul>
 <BR>
 <BR>
-<h2>This application is provided by slovakian online chess team</h2>
-We are an team, which is making online chess streaming. We are fully profesionals and we can also get a lot of chess boards
+<h2 style="color: #FF0000;">Online streaming</h2>
+This application is provided by slovakian online chess streaming team. We are an team, 
+which is making online chess streaming. We are fully profesionals and we can also get a lot of chess boards
 <h3>Contacts regarding making an online chess stream:</h3> 
 Bury Rastislav (bury.rastislav@gmail.com), Dobrotka Martin, Pekar Karol, Palecek Peter, Diviak Rastislav
 
