@@ -83,6 +83,7 @@ Second one:
 
 <h2>Requirements:</h2>
 <ol>
+<li>Java 1.8 and higher</li>
 <li>DGT Livechess</li>
 <li>FTP connection settings to webserver</li>
 <li>FTP Server on localhost (Second scenario)</li>
@@ -119,17 +120,13 @@ Second one:
 <h2>Some hints how it's working</h2>
 <ul>
 <li>If you let ftp.server empty in property file, Files will not be uploaded to ftp server. They will be only copied to publish directory. This is fine when this script will be running on webserver.</li>
-<li>After application start every file's first check will be allways published. After this first check every next time the file will be published only when file was changed. For file change app is detecting datetimeModify property of file and Md5 checksum.</li>
+<li>After application start if publish directory is empty, current livechess files will be directly published. After this first check every next time the file will be published only when file was changed. For file change app is detecting datetimeModify property of file and Md5 checksum.</li>
 <li>FTP connection to server is opening only when at least 1 file will be copied or publish directory contains at least one directory</li>
-<li>Application is copying all files from backup/publish directories. It doesn't check if they are from DGT Livechess or not</li>
-<li>If you want to publish something directly to webserver, create directory with name "1" in backup directory and give files there</li> 
-<li>If you want to publish players to webservice and don't want to wait for delay.games time you can do it this way:
-<ul>
-<li>Create players in livechess app and publish them to ftp</li>
-<li>Wait till application will create a new directory in backup directory</li> 
-<li>Rename last created directory in backup directory to directory with name "1" and remove all other directories</li>
-</ul>
-</li>
+<li>Application is copying all files from backup/publish directories. It doesn't check if they are from DGT Livechess or not (check property file - setting ftp.onlypgn=false)</li>
+<li>If you want to publish players to webservice and don't want to wait for delay.games time you only need to clean all files from publish directory</li>
+<li>You can delay all games or some of them</li>
+<li>You can choose if finished games are still delayed or they will be directly published</li>
+<li>You can choose how big shall be the delay</li>
 </ul>
 
 <h2>How to install ftp server on windows (e.g. localy)</h2>
@@ -143,6 +140,14 @@ Second one:
 </ul>
 
 <h2>Changes</h2>
+<ul>
+version 2.0.0:
+<li>if still nothing was published (publish folder is empty), current livechess upload will be uploaded</li>
+<li>if all games are finished, current livechess upload will be uploaded (is possible to change in property file)</li>
+<li>it's possible to delay only some of the games</li>
+<li>it's possible to configure in property file, that finished games are not delayed but all moves till end of game will be pushed at once</li>
+</ul>
+
 <ul>
 version 1.0.1:
 <li>fixing slashes in properties file in paths</li>
