@@ -100,7 +100,11 @@ Second one:
 <li>directory.livechess - path to directory where livechess files will be uploaded</li>
 <li>directory.backup - working directory. Livechess files will be saved here</li>
 <li>directory.publish - publish directory. This directory will contain files for publishing on webserver. This directory can be direct on webserver as public directory</li>
+<li>directory.finished - finished directory. This directory will contain finished games from games.pgn</li>
 <li>delay.games - delay time of game stream in seconds. To delay game for 15 minutes, you need to set it as 15*60 = 900 (put value 900 there)</li>
+<li>delay.finishedgames - When game will finish, shall be direct published or still shall be delayed. Possible values "true" = it shall be delayed or "false". If "false" value set, this setting requires "onlypgn" as "true", else it will be delayed</li>
+<li>delay.finishedround - When all games will finish, shall all games direct published or still shall be delayed. If true, you need to run script the whole delayed time till end. Possible values "true" = it shall be delayed or "false".</li>
+<li>delay.games.define - You can specify which games shall be delayed. If asterix "*" all games will be delayed. Else you can define number of games separated with semicolon. Example: "1;3;4;9;10". If board numbers defined, this setting requires "onlypgn" as "true", else it will be disabled</li>
 <li>app.refresh - it's application refresh interval. Livechess has this value default set to 10 seconds.This value means "start repeat all checking after 10 seconds after finishing previous one"</li>
 <li>boards.number - by backup directory creating app is checking if pgn contains all expected games and already last game is ending with valid signs (e.g. with asterix or with results). If pgn is not valid, app will destroy this backup and will try to create it again immediately (e.g. ignoring app.refresh value)</li>
 <li>ftp.server - ftp server address</li>
