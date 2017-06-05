@@ -6,9 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Named;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.util.Objects;
 
 @Named
 public class FileUtils {
@@ -32,12 +31,30 @@ public class FileUtils {
         }
     }
 
-    private void copyFile(File source, File target) throws IOException {
+    public void copyFile(File source, File target) throws IOException {
         Path from = source.toPath();
         Path to = target.toPath();
         Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
 
         //Files.copy(source.toPath(), target.toPath(),);
+    }
+
+    public void deleteAllInDir(File dir, File exceptFile) {
+        for(File file: dir.listFiles()) {
+            //logger.info(file.getPath());
+            //logger.info(exceptFile.getPath());
+            if(!file.getPath().toString().equals(exceptFile.getPath().toString())) {
+                //logger.info("DELETING");
+                deleteDir(file);
+            }
+        }
+    }
+
+    public void moveDirToDir(File dir1, File dir2) throws IOException {
+        if(!Files.exists(dir2.toPath())) {
+            Files.createDirectory(dir2.toPath());
+        }
+        Files.move(dir1.toPath(), dir2.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
     public void deleteDir(File dir)
@@ -56,5 +73,28 @@ public class FileUtils {
             // Deleting file
             dir.delete();
         }
+    }
+
+    public String Read(String pgnFile) throws IOException {
+        String pgnData = "";
+        String line = null;
+        StringBuilder  stringBuilder = new StringBuilder();
+        String ls = System.getProperty("line.separator");
+
+        BufferedReader reader = new BufferedReader(new FileReader(pgnFile));
+        try {
+            while((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(ls);
+            }
+        } finally {
+            reader.close();
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public void WriteToFile(String file, String content) throws IOException {
+        Files.write( Paths.get(file), content.getBytes());
     }
 }

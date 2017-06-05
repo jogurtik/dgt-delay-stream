@@ -102,6 +102,8 @@ public class FtpServer {
                     srcStream.close();
                     //IOUtils.closeQuietly(srcStream);
                 }
+            } else if(src.getName().equals("games.pgn")) {
+                logger.info("FTP ignored, not changed: " + src.getAbsolutePath() + " size: " + src.length() + "b");
             } else {
                 logger.debug("FTP ignored, not changed: " + src.getAbsolutePath() + " size: " + src.length() + "b");
             }

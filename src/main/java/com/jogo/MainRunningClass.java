@@ -12,6 +12,8 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -27,32 +29,57 @@ public class MainRunningClass {
 
     private String workingDir;
 
+    private FileUtils fileUtils;
     // Timestamps
     // https://www.mkyong.com/java/how-to-get-current-timestamps-in-java/
     @PostConstruct
-    public void commandLineRunner() {
+    public void commandLineRunner() throws IOException {
         List<Map<String, Object>> result;
         boolean wait = true;
+        fileUtils = new FileUtils();
 
         while (true) {
             wait = true;
-            logger.info("=== Start of loop === ");
+            logger.info("=== Start of loop in " + new java.io.File( "." ).getCanonicalPath() + " === ");
             try {
                 // get directory timestamp name
                 workingDir = String.valueOf(System.currentTimeMillis());
+                File publishDirectory = new File(appProperties.getDirectoryPublish());
+                String backupDirectory = appProperties.getDirectoryBackup() + "/" + workingDir;
+
+                if(new File(backupDirectory).list().length == 0) {
+                    waitConfiguredTime();
+                    continue;
+                }
 
                 // try to copy data from livechess uploaded folder
                 getDataFromLivechessFolder();
                 // check if all data are ok
                 int check = checkDataFromLivechessFolder();
+
                 if (check < 0) {
+                    logger.error("PGN file check - false");
                     // data are not ok, removing the copy
-                    FileUtils FileUtils = new FileUtils();
-                    FileUtils.deleteDir(new File(appProperties.getDirectoryBackup() + "/" + workingDir));
+                    fileUtils.deleteDir(new File(backupDirectory));
                     // don't make delay and try again
                     wait = false;
-                } else if(check == 0) {
+                } else if ((check >= 0) && (publishDirectory.list().length == 0)) {
+                    logger.info("Publish directory is empty, publish first files");
+                    String workingDir2 = String.valueOf(System.currentTimeMillis()-1000*60*60*24);
+                    String newBackupDirectory = appProperties.getDirectoryBackup() + "/" + workingDir2;
+                    fileUtils.moveDirToDir(new File(backupDirectory), new File(newBackupDirectory));
+                    fileUtils.deleteAllInDir(new File(appProperties.getDirectoryBackup()), new File(newBackupDirectory));
+                } else if (check == 0) {
                     logger.debug("PGN file check - OK");
+                } else if (check == 2) {
+                    if (appProperties.getDelayFinishedRound().equals("false")){
+                        logger.info("all games finished, publishing without delay");
+                        String workingDir2 = String.valueOf(System.currentTimeMillis() - 1000 * 60 * 60 * 24);
+                        String newBackupDirectory = appProperties.getDirectoryBackup() + "/" + workingDir2;
+
+                        fileUtils.moveDirToDir(new File(backupDirectory), new File(newBackupDirectory));
+                        fileUtils.deleteAllInDir(new File(appProperties.getDirectoryBackup()), new File(newBackupDirectory));
+                    }
                 }
 
                 // try to copy data from backup folder to publish folder
@@ -72,8 +99,48 @@ public class MainRunningClass {
         File srcDir = new File(appProperties.getDirectoryLiveChess());
         File destDir = new File(appProperties.getDirectoryBackup() + "/" + workingDir);
 
+        //logger.info(appProperties.getDirectoryLiveChess());
+        //logger.info(appProperties.getDirectoryBackup() + "/" + workingDir);
         FileUtils FileUtils = new FileUtils();
         FileUtils.copy(srcDir, destDir);
+
+        if(appProperties.getFtpOnlyPgn().equals("true") &&
+                appProperties.getDelayFinishedGames().equals("false")) {
+            splitPgnGamesIntoFiles(appProperties.getDirectoryBackup() + "/" + workingDir);
+        }
+    }
+
+    private void splitPgnGamesIntoFiles(String destDir) throws IOException {
+        if(appProperties.getFtpOnlyPgn().equals("true") &&
+                appProperties.getDelayFinishedGames().equals("false")) {
+            String pgnFile = destDir + "/" + "games.pgn";
+            String pgnData = fileUtils.Read(pgnFile);
+
+            String[] splitPgnFile = pgnData.split("\\[Event \"");
+            for (String pgn : splitPgnFile) {
+                pgn = "[Event \"" + pgn;
+                //logger.info(pgn);
+                if (pgn.indexOf("[Round") > 0) {
+                    String fileName = pgn.substring(pgn.indexOf("[Round"));
+                    fileName = fileName.substring(0, fileName.indexOf("]"));
+                    fileName = fileName.replace("[Round \"", "");
+                    fileName = fileName.replace("\"", "");
+                    String boardNumber = fileName.substring(fileName.indexOf(".")+1);
+                    fileName = fileName + ".pgn";
+                    pgn = pgn.trim();
+                    fileUtils.WriteToFile(destDir + "/" + fileName, pgn);
+                    PgnFile pgnFileObj = new PgnFile();
+                    if (pgnFileObj.CheckAllFinished(pgn)) {
+                        fileUtils.copyFile(new File(destDir + "/" + fileName), new File(appProperties.getDirectoryFinished() + "/" + fileName));
+                    } else if(!appProperties.getDelayGamesDefine().equals("*")) {
+                        String DelayedGames = ";" + appProperties.getDelayGamesDefine() + ";";
+                        if(DelayedGames.contains(";" + boardNumber + ";")) {
+                            fileUtils.copyFile(new File(destDir + "/" + fileName), new File(appProperties.getDirectoryFinished() + "/" + fileName));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private int checkDataFromLivechessFolder() throws IOException {
@@ -89,10 +156,39 @@ public class MainRunningClass {
             logger.debug("Copying data to publish directory from [" + appProperties.getDirectoryBackup() + "/" + workingDir + "]");
             File backupDir = new File(appProperties.getDirectoryBackup() + "/" + workingDir);
             File publishDir = new File(appProperties.getDirectoryPublish());
+            File finishedDir = new File(appProperties.getDirectoryFinished());
 
             FileUtils FileUtils = new FileUtils();
             FileUtils.copy(backupDir, publishDir);
             FileUtils.deleteDir(backupDir);
+
+            if(appProperties.getFtpOnlyPgn().equals("true") &&
+                    appProperties.getDelayFinishedGames().equals("false")) {
+                FileUtils.copy(finishedDir, publishDir);
+                int round = -1;
+                for (File file : publishDir.listFiles()) {
+                    if(file.getName().endsWith(".pgn")) {
+                        for (int i = 1; i < 100; i++) {
+
+                            if (file.getName().startsWith(String.valueOf(i) + ".")) {
+                                round = i;
+                                break;
+                            }
+                        }
+                    }
+                    if(round > 0) {
+                        break;
+                    }
+                }
+
+                String allPgn = "";
+                for (int i = 1; i <= Integer.parseInt(appProperties.getBoardsNumber()); i++) {
+                    String pgn = fileUtils.Read(publishDir.getPath() + "/" + String.valueOf(round) + "." + String.valueOf(i) + ".pgn");
+                    allPgn = allPgn + pgn + "\n";
+                }
+
+                fileUtils.WriteToFile(publishDir.getPath() + "/games.pgn", allPgn);
+            }
 
             if(!appProperties.getFtpServer().isEmpty()) {
                 logger.debug("Publishing data to ftp server");

@@ -16,29 +16,43 @@ public class PgnFile {
         String pgnData = "";
 
         try {
-            pgnData = Read(pgnFile);
+            if(pgnFile.contains(".pgn")) {
+                FileUtils fileUtils = new FileUtils();
+                pgnData = fileUtils.Read(pgnFile);
+            } else {
+                pgnData = pgnFile;
+            }
+
+            if (!CheckPgnBoards(pgnData, boardNumber)) {
+                logger.error("PGN file check - WRONG CheckPgnBoards");
+                fileIsOk = -1;
+            } else if (!CheckPgnEnd(pgnData)) {
+                logger.error("PGN file check - WRONG CheckPgnEnd");
+                fileIsOk = -2;
+            } else if (CheckAllFinished(pgnData)) {
+                logger.info("All games finished in pgn");
+                fileIsOk = 2;
+            }
         } catch (Exception ex){
             logger.error("PGN file not found - " + ex.getMessage());
             fileIsOk = 1;
         }
 
-        if(fileIsOk == 0) {
-            if (!CheckPgnBoards(pgnData, boardNumber)) {
-                logger.debug("PGN file check - WRONG CheckPgnBoards");
-                fileIsOk = -1;
-            }
-            if (!CheckPgnEnd(pgnData)) {
-                logger.debug("PGN file check - WRONG CheckPgnEnd");
-                fileIsOk = -2;
-            }
-        }
         return fileIsOk;
+    }
+
+    public boolean CheckAllFinished(String pgnData) {
+        boolean allFinished = true;
+        if(pgnData.contains("[Result \"*\"]")) {
+            allFinished = false;
+        }
+        return allFinished;
     }
 
     private boolean CheckPgnBoards(String pgnData, int boardNumber) {
         boolean found = false;
         for (int i = 1; i < 100; i++) {
-            if(!pgnData.contains("[Round \""+String.valueOf(i)+"."+ toString().valueOf(boardNumber)+"\"]")) {
+            if(pgnData.contains("[Round \""+String.valueOf(i)+"."+ toString().valueOf(boardNumber)+"\"]")) {
                 found = true;
             }
         }
@@ -49,34 +63,16 @@ public class PgnFile {
         boolean fileIsOk = true;
 
         pgnData = pgnData.trim();
+        //logger.info("@"+pgnData+"@");
         if(
-                (!pgnData.endsWith(" 1/2-1/2"))
-                        && (!pgnData.endsWith(" 1-0"))
-                        && (!pgnData.endsWith(" 0-1"))
-                        && (!pgnData.endsWith(" *"))
+                (!pgnData.endsWith("1/2-1/2"))
+                        && (!pgnData.endsWith("1-0"))
+                        && (!pgnData.endsWith("0-1"))
+                        && (!pgnData.endsWith("*"))
                 ) {
             fileIsOk = false;
         }
 
         return fileIsOk;
-    }
-
-    private String Read(String pgnFile) throws IOException {
-        String pgnData = "";
-        String line = null;
-        StringBuilder  stringBuilder = new StringBuilder();
-        String ls = System.getProperty("line.separator");
-
-        BufferedReader reader = new BufferedReader(new FileReader(pgnFile));
-        try {
-            while((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-                stringBuilder.append(ls);
-            }
-        } finally {
-            reader.close();
-        }
-
-        return stringBuilder.toString();
     }
 }

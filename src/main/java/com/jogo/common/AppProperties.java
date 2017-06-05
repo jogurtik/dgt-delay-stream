@@ -132,6 +132,38 @@ public class AppProperties {
         this.ftpDirectory = ftpDirectory;
     }
 
+    public String getDelayFinishedGames() {
+        return delayFinishedGames;
+    }
+
+    public void setDelayFinishedGames(String delayFinishedGames) {
+        this.delayFinishedGames = delayFinishedGames;
+    }
+
+    public String getDelayFinishedRound() {
+        return delayFinishedRound;
+    }
+
+    public void setDelayFinishedRound(String delayFinishedRound) {
+        this.delayFinishedRound = delayFinishedRound;
+    }
+
+    public String getDirectoryFinished() {
+        return directoryFinished;
+    }
+
+    public void setDirectoryFinished(String directoryFinished) {
+        this.directoryFinished = directoryFinished;
+    }
+
+    public String getDelayGamesDefine() {
+        return delayGamesDefine;
+    }
+
+    public void setDelayGamesDefine(String delayGamesDefine) {
+        this.delayGamesDefine = delayGamesDefine;
+    }
+
     @Value("${directory.publish}")
     private String directoryPublish;
 
@@ -167,4 +199,16 @@ public class AppProperties {
 
     @Value("${ftp.directory}")
     private String ftpDirectory;
+
+    @Value("${delay.finishedgames}")
+    private String delayFinishedGames;
+
+    @Value("${delay.finishedround}")
+    private String delayFinishedRound;
+
+    @Value("${directory.finished}")
+    private String directoryFinished;
+
+    @Value("${delay.games.define}")
+    private String delayGamesDefine;
 }
