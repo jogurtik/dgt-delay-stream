@@ -38,7 +38,23 @@ public class PgnFile {
             fileIsOk = 1;
         }
 
+        if(fileIsOk >= 0) {
+            LogStatistic(pgnData);
+        }
         return fileIsOk;
+    }
+
+    public void LogStatistic(String pgnData) {
+        int count = pgnData.split("\\[Result \"\\*\"]", -1).length - 1;
+        String str = "Playing " + String.valueOf(count) + " # ";
+        count = pgnData.split("\\[Result \"1-0\"]", -1).length - 1;
+        str += "White win " + String.valueOf(count) + " # ";
+        count = pgnData.split("\\[Result \"1/2-1/2\"]", -1).length - 1;
+        str += "Draw " + String.valueOf(count) + " # ";
+        count = pgnData.split("\\[Result \"0-1\"]", -1).length - 1;
+        str += "Black win " + String.valueOf(count) + " # ";
+
+        logger.info(str);
     }
 
     public boolean CheckAllFinished(String pgnData) {
@@ -46,6 +62,7 @@ public class PgnFile {
         if(pgnData.contains("[Result \"*\"]")) {
             allFinished = false;
         }
+
         return allFinished;
     }
 
