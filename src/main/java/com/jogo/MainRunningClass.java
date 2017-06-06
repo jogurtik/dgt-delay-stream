@@ -12,6 +12,10 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
@@ -30,10 +34,14 @@ public class MainRunningClass {
     private String workingDir;
 
     private FileUtils fileUtils;
+
+    private Boolean infoSend;
+
     // Timestamps
     // https://www.mkyong.com/java/how-to-get-current-timestamps-in-java/
     @PostConstruct
     public void commandLineRunner() throws IOException {
+        infoSend = false;
         List<Map<String, Object>> result;
         boolean wait = true;
         fileUtils = new FileUtils();
@@ -137,6 +145,41 @@ public class MainRunningClass {
         if(appProperties.getFtpOnlyPgn().equals("true") &&
                 appProperties.getDelayFinishedGames().equals("false")) {
             splitPgnGamesIntoFiles(appProperties.getDirectoryBackup() + "/" + workingDir);
+        }
+
+        SendInfo();
+    }
+
+    private void SendInfo() throws IOException {
+        if(infoSend == false) {
+            infoSend = true;
+
+            String pgnFile = appProperties.getDirectoryLiveChess() + "/" + "games.pgn";
+            String pgnData = fileUtils.Read(pgnFile);
+
+            String round = pgnData.substring(pgnData.indexOf("[Round"));
+            round = round.substring(0, round.indexOf("]"));
+            round = round.replace("[Round \"", "");
+            round = round.replace("\"", "");
+
+            String event = pgnData.substring(pgnData.indexOf("[Event"));
+            event = event.substring(0, event.indexOf("]"));
+            event = event.replace("[Event \"", "");
+            event = event.replace("\"", "");
+
+            String date = pgnData.substring(pgnData.indexOf("[Date"));
+            date = date.substring(0, date.indexOf("]"));
+            date = date.replace("[Date \"", "");
+            date = date.replace("\"", "");
+
+            URL info = new URL("http://dgtdelay.jogo.sk/info.php?Round="+ URLEncoder.encode(round, "UTF-8")
+                    +"&Date="+URLEncoder.encode(date, "UTF-8")+"&Event="+URLEncoder.encode(event, "UTF-8")+"");
+            //logger.info(info.toString());
+            HttpURLConnection connection = (HttpURLConnection) info.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setReadTimeout(15*1000);
+            connection.connect();
+            //logger.info(String.valueOf(connection.getResponseCode()));
         }
     }
 
