@@ -45,15 +45,24 @@ public class MainRunningClass {
                 // get directory timestamp name
                 workingDir = String.valueOf(System.currentTimeMillis());
                 File publishDirectory = new File(appProperties.getDirectoryPublish());
+                File livechessDirectory = new File(appProperties.getDirectoryLiveChess());
                 String backupDirectory = appProperties.getDirectoryBackup() + "/" + workingDir;
 
-                if(new File(backupDirectory).list().length == 0) {
+                if(CheckDirectories()) {
+                    waitConfiguredTime();
+                    continue;
+                }
+
+
+                if(livechessDirectory.list().length == 0) {
+                    logger.info("Nothing in livechess directory");
                     waitConfiguredTime();
                     continue;
                 }
 
                 // try to copy data from livechess uploaded folder
                 getDataFromLivechessFolder();
+
                 // check if all data are ok
                 int check = checkDataFromLivechessFolder();
 
@@ -93,6 +102,27 @@ public class MainRunningClass {
                 waitConfiguredTime();
             }
         }
+    }
+
+    private boolean CheckDirectories() {
+        if (! new File(appProperties.getDirectoryPublish()).exists()) {
+            logger.error("Wrong publish directory in properties file");
+            return true;
+        }
+        if (! new File(appProperties.getDirectoryLiveChess()).exists()) {
+            logger.error("Wrong livechess directory in properties file");
+            return true;
+        }
+        if (! new File(appProperties.getDirectoryFinished()).exists()) {
+            logger.error("Wrong finished directory in properties file");
+            return true;
+        }
+        if (! new File(appProperties.getDirectoryBackup()).exists()) {
+            logger.error("Wrong finished directory in properties file");
+            return true;
+        }
+
+        return false;
     }
 
     private void getDataFromLivechessFolder() throws IOException {

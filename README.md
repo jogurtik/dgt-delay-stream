@@ -1,7 +1,16 @@
 <h1>Chess online streaming</h1>
-This application is provided by slovakian online chess streaming team. We are an team, 
-which is making online chess streaming. We are fully profesionals and we can also get a lot of chess boards
-<h3>Contacts regarding making an online chess stream:</h3> 
+<p>This application is provided by slovakian online chess streaming team.
+We are a skilled team of profesional international arbiters and we can offer you
+online chess streaming from your chess tournaments. Online stream can be transfered
+in real time or it can be also delayed when you wish. This is for you an
+perfect solution, while you are not getting only online streaming, but also an
+internation arbiter for your tournament. Every from our team members can create
+and operate online stream alone - without any support. By bigger tournaments there
+is already required our cooperation of multiple members of our team. Our references
+you can find bellow. In cooperation with Slovak Chess Federation its possible also to
+lend Slovak chess boards for online streaming (now so about 50 stock).
+</p>
+<h3>Contacts regarding making an online chess stream:</h3>
 Bury Rastislav (bury.rastislav@gmail.com), Dobrotka Martin, Pekar Karol, Palecek Peter, Diviak Rastislav
 
 <h3>Our history of making live chess streams:</h3>
