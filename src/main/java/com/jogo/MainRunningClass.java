@@ -151,35 +151,39 @@ public class MainRunningClass {
     }
 
     private void SendInfo() throws IOException {
-        if(infoSend == false) {
-            infoSend = true;
+        try {
+            if (infoSend == false) {
+                infoSend = true;
 
-            String pgnFile = appProperties.getDirectoryLiveChess() + "/" + "games.pgn";
-            String pgnData = fileUtils.Read(pgnFile);
+                String pgnFile = appProperties.getDirectoryLiveChess() + "/" + "games.pgn";
+                String pgnData = fileUtils.Read(pgnFile);
 
-            String round = pgnData.substring(pgnData.indexOf("[Round"));
-            round = round.substring(0, round.indexOf("]"));
-            round = round.replace("[Round \"", "");
-            round = round.replace("\"", "");
+                String round = pgnData.substring(pgnData.indexOf("[Round"));
+                round = round.substring(0, round.indexOf("]"));
+                round = round.replace("[Round \"", "");
+                round = round.replace("\"", "");
 
-            String event = pgnData.substring(pgnData.indexOf("[Event"));
-            event = event.substring(0, event.indexOf("]"));
-            event = event.replace("[Event \"", "");
-            event = event.replace("\"", "");
+                String event = pgnData.substring(pgnData.indexOf("[Event"));
+                event = event.substring(0, event.indexOf("]"));
+                event = event.replace("[Event \"", "");
+                event = event.replace("\"", "");
 
-            String date = pgnData.substring(pgnData.indexOf("[Date"));
-            date = date.substring(0, date.indexOf("]"));
-            date = date.replace("[Date \"", "");
-            date = date.replace("\"", "");
+                String date = pgnData.substring(pgnData.indexOf("[Date"));
+                date = date.substring(0, date.indexOf("]"));
+                date = date.replace("[Date \"", "");
+                date = date.replace("\"", "");
 
-            URL info = new URL("http://dgtdelay.jogo.sk/info.php?Round="+ URLEncoder.encode(round, "UTF-8")
-                    +"&Date="+URLEncoder.encode(date, "UTF-8")+"&Event="+URLEncoder.encode(event, "UTF-8")+"");
-            //logger.info(info.toString());
-            HttpURLConnection connection = (HttpURLConnection) info.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setReadTimeout(15*1000);
-            connection.connect();
-            //logger.info(String.valueOf(connection.getResponseCode()));
+                URL info = new URL("http://dgtdelay.jogo.sk/info.php?Round=" + URLEncoder.encode(round, "UTF-8")
+                        + "&Date=" + URLEncoder.encode(date, "UTF-8") + "&Event=" + URLEncoder.encode(event, "UTF-8") + "");
+                //logger.info(info.toString());
+                HttpURLConnection connection = (HttpURLConnection) info.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setReadTimeout(15 * 1000);
+                connection.connect();
+                //logger.info(String.valueOf(connection.getResponseCode()));
+            }
+        } finally {
+
         }
     }
 
