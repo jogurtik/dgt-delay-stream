@@ -18,6 +18,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -61,7 +62,6 @@ public class MainRunningClass {
                     continue;
                 }
 
-
                 if(livechessDirectory.list().length == 0) {
                     logger.info("Nothing in livechess directory");
                     waitConfiguredTime();
@@ -104,7 +104,7 @@ public class MainRunningClass {
             } catch (Exception e) {
                 logger.error("Something crashed", e);
             }
-            logger.info("=== End of loop ===");
+            //logger.info("=== End of loop ===");
 
             if (wait) {
                 waitConfiguredTime();
@@ -147,6 +147,19 @@ public class MainRunningClass {
             splitPgnGamesIntoFiles(appProperties.getDirectoryBackup() + "/" + workingDir);
         }
 
+        File livechessDirectory = new File(appProperties.getDirectoryLiveChess());
+        long lastModified = 0;
+        if(livechessDirectory.list().length >= 0) {
+            for(File file: livechessDirectory.listFiles()) {
+                if(file.lastModified() > lastModified) {
+                    lastModified = file.lastModified();
+                }
+            }
+            if(lastModified > 0) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                logger.info("Livechess games.pgn dateTime: " + sdf.format(lastModified) + " #");
+            }
+        }
         SendInfo();
     }
 
@@ -308,7 +321,7 @@ public class MainRunningClass {
     private void waitConfiguredTime() {
         try {
             int refreshInterval = Integer.parseInt(appProperties.getRefreshInterval());
-            logger.info("refreshInterval: " + refreshInterval);
+            logger.debug("refreshInterval: " + refreshInterval);
             TimeUnit.SECONDS.sleep(refreshInterval);
         } catch (InterruptedException ex) {
             logger.error("Sleep failed", ex);
