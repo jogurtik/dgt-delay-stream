@@ -166,9 +166,13 @@ public class MainRunningClass {
     private void SendInfo() throws IOException {
         try {
             if (infoSend == false) {
+                String pgnFile = appProperties.getDirectoryLiveChess() + "/" + "games.pgn";
+                if (!new File(pgnFile).exists()) {
+                    return;
+                }
+
                 infoSend = true;
 
-                String pgnFile = appProperties.getDirectoryLiveChess() + "/" + "games.pgn";
                 String pgnData = fileUtils.Read(pgnFile);
 
                 String round = pgnData.substring(pgnData.indexOf("[Round"));
