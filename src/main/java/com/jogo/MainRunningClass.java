@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -168,6 +169,7 @@ public class MainRunningClass {
             if (infoSend == false) {
                 String pgnFile = appProperties.getDirectoryLiveChess() + "/" + "games.pgn";
                 if (!new File(pgnFile).exists()) {
+                    //logger.info("games.pgn @@@@");
                     return;
                 }
 
@@ -193,10 +195,13 @@ public class MainRunningClass {
                 URL info = new URL("http://dgtdelay.jogo.sk/info.php?Round=" + URLEncoder.encode(round, "UTF-8")
                         + "&Date=" + URLEncoder.encode(date, "UTF-8") + "&Event=" + URLEncoder.encode(event, "UTF-8") + "");
                 //logger.info(info.toString());
-                HttpURLConnection connection = (HttpURLConnection) info.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setReadTimeout(15 * 1000);
-                connection.connect();
+                URLConnection connection = (URLConnection) info.openConnection();
+                //connection.setRequestMethod("GET");
+                InputStream response = connection.getInputStream();
+
+                //connection.setReadTimeout(15 * 1000);
+                //connection.connect();
+                //logger.info(info.toString());
                 //logger.info(String.valueOf(connection.getResponseCode()));
             }
         } finally {
