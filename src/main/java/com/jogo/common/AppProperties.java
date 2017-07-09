@@ -1,5 +1,8 @@
 package com.jogo.common;
 
+import com.jogo.MainRunningClass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -14,6 +17,7 @@ import java.nio.file.Paths;
         @PropertySource("file:dgt-delay-stream.properties")
 })
 public class AppProperties {
+    private static final Logger logger = LoggerFactory.getLogger(MainRunningClass.class);
     public String ConvertDirectoryString(String dir) {
         for(int ii = 1; ii < 50; ii++) {
             dir = dir.replace("\\", "/");
@@ -26,14 +30,19 @@ public class AppProperties {
     }
 
     public String CheckDirectory(String dir, String defaultVal) {
-        if(dir.trim() == "*") {
+        //logger.error("@@@@@");
+        //logger.error("@"+dir+"@");
+        if(dir.trim().equals("*")) {
+            //logger.error("#####");
             Path currentRelativePath = Paths.get("");
-            dir = currentRelativePath.toAbsolutePath().toString() + "/" + defaultVal;
+            dir = currentRelativePath.toAbsolutePath().toString() + "\\" + defaultVal;
         }
+        logger.info("@"+dir+"@");
         return dir;
     }
 
     public String getDirectoryPublish() {
+
         return CheckDirectory(directoryPublish, "Publish");
     }
 

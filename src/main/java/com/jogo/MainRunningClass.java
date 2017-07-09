@@ -1,9 +1,9 @@
 package com.jogo;
 
 import com.jogo.common.AppProperties;
+import com.jogo.common.FileUtils;
 import com.jogo.common.FtpServer;
 import com.jogo.common.PgnFile;
-import com.jogo.common.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -13,12 +13,9 @@ import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
@@ -116,6 +113,7 @@ public class MainRunningClass {
     private boolean CheckDirectories() {
         if (! new File(appProperties.getDirectoryPublish()).exists()) {
             logger.error("Wrong publish directory in properties file");
+            logger.error(appProperties.getDirectoryPublish());
             return true;
         }
         if (! new File(appProperties.getDirectoryLiveChess()).exists()) {
