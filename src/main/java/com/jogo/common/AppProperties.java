@@ -5,56 +5,67 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @Configuration
 @PropertySources({
         @PropertySource("classpath:app.properties"),
         @PropertySource("file:dgt-delay-stream.properties")
 })
 public class AppProperties {
+    public String ConvertDirectoryString(String dir) {
+        for(int ii = 1; ii < 50; ii++) {
+            dir = dir.replace("\\", "/");
+            dir = dir.replace("//", "/");
+        }
+        for(int ii = 1; ii < 50; ii++) {
+            dir = dir.replace("/", "\\");
+        }
+        return dir;
+    }
+
+    public String CheckDirectory(String dir, String defaultVal) {
+        if(dir.trim() == "*") {
+            Path currentRelativePath = Paths.get("");
+            dir = currentRelativePath.toAbsolutePath().toString() + "/" + defaultVal;
+        }
+        return dir;
+    }
+
     public String getDirectoryPublish() {
-        return directoryPublish;
+        return CheckDirectory(directoryPublish, "Publish");
     }
 
     public void setDirectoryPublish(String directoryPublish) {
-        for(int ii = 1; ii < 50; ii++) {
-            directoryPublish = directoryPublish.replace("\\", "/");
-            directoryPublish = directoryPublish.replace("//", "/");
-        }
-        for(int ii = 1; ii < 50; ii++) {
-            directoryPublish = directoryPublish.replace("/", "\\");
-        }
-        this.directoryPublish = directoryPublish;
+        this.directoryPublish = ConvertDirectoryString(directoryPublish);
     }
 
     public String getDirectoryLiveChess() {
-        return directoryLiveChess;
+        return CheckDirectory(directoryLiveChess, "LiveChess");
     }
 
     public void setDirectoryLiveChess(String directoryLiveChess) {
-        for(int ii = 1; ii < 50; ii++) {
-            directoryLiveChess = directoryLiveChess.replace("\\", "/");
-            directoryLiveChess = directoryLiveChess.replace("//", "/");
-        }
-        for(int ii = 1; ii < 50; ii++) {
-            directoryLiveChess = directoryLiveChess.replace("/", "\\");
-        }
-        this.directoryLiveChess = directoryLiveChess;
+        this.directoryLiveChess = ConvertDirectoryString(directoryLiveChess);
     }
 
     public String getDirectoryBackup() {
-        return directoryBackup;
+        return CheckDirectory(directoryBackup, "Backup");
     }
 
     public void setDirectoryBackup(String directoryBackup) {
-        for(int ii = 1; ii < 50; ii++) {
-            directoryBackup = directoryBackup.replace("\\", "/");
-            directoryBackup = directoryBackup.replace("//", "/");
-        }
-        for(int ii = 1; ii < 50; ii++) {
-            directoryBackup = directoryBackup.replace("/", "\\");
-        }
-        this.directoryBackup = directoryBackup;
+        this.directoryBackup = ConvertDirectoryString(directoryBackup);
     }
+
+    public String getDirectoryFinished() {
+        return CheckDirectory(directoryFinished, "Finished");
+    }
+
+    public void setDirectoryFinished(String directoryFinished) {
+        this.directoryFinished = ConvertDirectoryString(directoryFinished);
+
+    }
+
 
     public String getBoardsNumber() {
         return boardsNumber;
@@ -146,14 +157,6 @@ public class AppProperties {
 
     public void setDelayFinishedRound(String delayFinishedRound) {
         this.delayFinishedRound = delayFinishedRound;
-    }
-
-    public String getDirectoryFinished() {
-        return directoryFinished;
-    }
-
-    public void setDirectoryFinished(String directoryFinished) {
-        this.directoryFinished = directoryFinished;
     }
 
     public String getDelayGamesDefine() {
