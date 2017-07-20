@@ -43,9 +43,11 @@ public class MainRunningClass {
         infoSend = false;
         List<Map<String, Object>> result;
         boolean wait = true;
+        boolean deleteAll = false;
         fileUtils = new FileUtils();
 
         while (true) {
+            deleteAll = false;
             wait = true;
             logger.info("=== Start of loop in " + new java.io.File( "." ).getCanonicalPath() + " === ");
             try {
@@ -94,6 +96,7 @@ public class MainRunningClass {
 
                         fileUtils.moveDirToDir(new File(backupDirectory), new File(newBackupDirectory));
                         fileUtils.deleteAllInDir(new File(appProperties.getDirectoryBackup()), new File(newBackupDirectory));
+                        deleteAll = true;
                     }
                 }
 
@@ -104,6 +107,11 @@ public class MainRunningClass {
             }
             //logger.info("=== End of loop ===");
 
+            if (deleteAll) {
+                fileUtils.deleteAllInDir(new File(appProperties.getDirectoryBackup()), null);
+                fileUtils.deleteAllInDir(new File(appProperties.getDirectoryPublish()), null);
+                fileUtils.deleteAllInDir(new File(appProperties.getDirectoryFinished()), null);
+            }
             if (wait) {
                 waitConfiguredTime();
             }
