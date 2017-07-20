@@ -111,6 +111,7 @@ public class MainRunningClass {
                 fileUtils.deleteAllInDir(new File(appProperties.getDirectoryBackup()), null);
                 fileUtils.deleteAllInDir(new File(appProperties.getDirectoryPublish()), null);
                 fileUtils.deleteAllInDir(new File(appProperties.getDirectoryFinished()), null);
+                fileUtils.deleteAllInDir(new File(appProperties.getDirectoryLiveChess()), null);
             }
             if (wait) {
                 waitConfiguredTime();
