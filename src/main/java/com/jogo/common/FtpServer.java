@@ -1,18 +1,17 @@
 package com.jogo.common;
 
+import com.jogo.MainRunningClass;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import com.jogo.MainRunningClass;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Named
 public class FtpServer {
@@ -71,6 +70,16 @@ public class FtpServer {
             logger.debug(ftp.getReplyString());
 
             ftp.changeWorkingDirectory(appProperties.getFtpDirectory());
+            if (ftp.getReplyCode() == 550) {
+                String[] arr = appProperties.getFtpDirectory().split("/");
+                for (String dir : arr) {
+                    ftp.changeWorkingDirectory(dir);
+                    if (ftp.getReplyCode() == 550) {
+                        ftp.makeDirectory(dir);
+                    }
+                    ftp.changeWorkingDirectory(dir);
+                }
+            }
 
             ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
         }
