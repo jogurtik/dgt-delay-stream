@@ -15,12 +15,19 @@ Bury Rastislav (bury.rastislav@gmail.com), Dobrotka Martin, Pekar Karol, Palecek
 
 <h3>Our history of making live chess streams:</h3>
 <ul>
+<li>2018, SVK, Poprad, <b>European Individual Women Chess Championship 2018</b>, 72 boards</li>       
+<li>2011-2018, SVK, Various cities, Extraliga - Slovak team championship, 48 boards</li>
+<li>2011-2018, SVK, Various cities, Slovakian Youth Chess Championships, 62 boards</li>
+<li>2011-2018, SVK, Various cities, Slovakian Championships, 50 boards</li>  
+</ul>
+
+<ul>
 <li>2017, BLR, Minsk, <b>European Individual Chess Championship 2017</b>, 100 boards</li>       
 <li>2017, BLR, Minsk, <b>1st World Cadet Rapid Chess Championship 2017</b>, 100 boards</li>
 <li>2017, BLR, Minsk, <b>1st World Cadet Blitz Chess Championship 2017</b>, 100 boards</li>
 <li>2017, SVK, Ruzomberok, <b>The 17th IPCA World Individual Chess Championship</b>, 12 boards</li>
 <li>2017, CZE, Kouty nad Desnou, Czech youth chess championship Kouty 2017, 50 boards</li>
-<li>2011-2017, SVK, Various cities, Extraliga - Slovak team championship, 48 boards</li>
+<li>2017, CZE, Pardubice, Czech Open 2015 + some accompanying tournaments, 100 boards</li>
 </ul>
 
 <ul>
@@ -31,6 +38,7 @@ Bury Rastislav (bury.rastislav@gmail.com), Dobrotka Martin, Pekar Karol, Palecek
 <li>2016, CZE, Kouty nad Desnou, Czech republic youth chess championship Kouty 2016, 50 boards</li>
 <li>2016, CZE, Olomouc, Olomouc Chess Summer 2016, 20 boards</li>
 <li>2016, CZE, Prague, Summer Prague 2016, 12 boards</li>
+<li>2016, CZE, Pardubice, Czech Open 2015 + some accompanying tournaments, 100 boards</li>
 </ul>
 
 <ul>
@@ -58,8 +66,6 @@ Bury Rastislav (bury.rastislav@gmail.com), Dobrotka Martin, Pekar Karol, Palecek
 
 <ul>
 <li>2011, SVK, Piestany, <b>IPCA World Championship 2011</b>, 50 boards</li>
-<li>2011-2017, SVK, Various cities, Slovakian Youth Chess Championships, 62 boards</li>
-<li>2011-2017, SVK, Various cities, Slovakian Championships, 50 boards</li>
 <li>2010, SVK, Banska Stiavnica, Slovakian Championships, 16 boards</li>
 <li>2007-2010, SVK, Various cities, Slovakian Youth Chess Championships, 16 boards</li>
 <li>and <b>various other slovak chess tournaments</b></li> 
