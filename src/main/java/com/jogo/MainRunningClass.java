@@ -258,6 +258,25 @@ public class MainRunningClass {
     }
 
     private void publishStream() throws IOException {
+        // try to publish live pgn
+        logger.info("Try to publish live pgn");
+        if(appProperties.getLivePgn().length() > 0) {
+            try {
+                File publishDir = new File(appProperties.getDirectoryPublish());
+                logger.info("publish live pgn done");
+                fileUtils.copy(new File(appProperties.getDirectoryLiveChess() + "/games.pgn"),
+                        new File(publishDir.getPath() + "/" + appProperties.getLivePgn() + ".pgn"));
+                if(!appProperties.getFtpServer().isEmpty()) {
+                    logger.info("Publishing live pgn to ftp server");
+                    ftpServer.uploadFiles(new File(publishDir.getPath() + "/" + appProperties.getLivePgn() + ".pgn"));
+                }
+            } catch (Exception ex) {
+                logger.error("Try to publish live pgn failed");
+            }
+        } else {
+            logger.info("publish live pgn disabled");
+        }
+
         while (findBackupDirectory()) {
             logger.debug("Copying data to publish directory from [" + appProperties.getDirectoryBackup() + "/" + workingDir + "]");
             File backupDir = new File(appProperties.getDirectoryBackup() + "/" + workingDir);
