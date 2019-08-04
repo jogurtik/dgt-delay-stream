@@ -176,6 +176,14 @@ public class AppProperties {
         this.delayGamesDefine = delayGamesDefine;
     }
 
+    public String getLivePgn() {
+        return livePgn;
+    }
+
+    public void setLivePgn(String livePgn) {
+        this.livePgn = livePgn;
+    }
+
     @Value("${directory.publish}")
     private String directoryPublish;
 
@@ -223,4 +231,7 @@ public class AppProperties {
 
     @Value("${delay.games.define}")
     private String delayGamesDefine;
+
+    @Value("${live.pgn}")
+    private String livePgn;
 }

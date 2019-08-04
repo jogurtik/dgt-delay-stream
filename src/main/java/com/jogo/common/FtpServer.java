@@ -23,6 +23,16 @@ public class FtpServer {
     private static final Logger logger = LoggerFactory.getLogger(MainRunningClass.class);
     private static final int BUFFER_SIZE = 4096;
 
+    public void uploadFiles(File file) throws IOException {
+        FTPClient ftp = new FTPClient();
+        try {
+            upload(file, ftp);
+        }
+        finally {
+            Disconnect(ftp);
+        }
+    }
+
     public void uploadFiles() throws IOException {
         FTPClient ftp = new FTPClient();
 
@@ -33,6 +43,7 @@ public class FtpServer {
                     if(file.getName().equals("games.pgn")) {
                         upload(file, ftp);
                     }
+
                 } else {
                     upload(file, ftp);
                 }
