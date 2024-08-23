@@ -4,21 +4,21 @@ import com.jogo.common.AppProperties;
 import com.jogo.common.FileUtils;
 import com.jogo.common.FtpServer;
 import com.jogo.common.PgnFile;
+import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -41,9 +41,8 @@ public class MainRunningClass {
     @PostConstruct
     public void commandLineRunner() throws IOException {
         infoSend = false;
-        List<Map<String, Object>> result;
-        boolean wait = true;
-        boolean deleteAll = false;
+        boolean wait;
+        boolean deleteAll;
         fileUtils = new FileUtils();
 
         while (true) {
@@ -57,12 +56,12 @@ public class MainRunningClass {
                 File livechessDirectory = new File(appProperties.getDirectoryLiveChess());
                 String backupDirectory = appProperties.getDirectoryBackup() + "/" + workingDir;
 
-                if(CheckDirectories()) {
+                if (CheckDirectories()) {
                     waitConfiguredTime();
                     continue;
                 }
 
-                if(livechessDirectory.list().length == 0) {
+                if (Objects.requireNonNull(livechessDirectory.list()).length == 0) {
                     logger.info("Nothing in livechess directory");
                     waitConfiguredTime();
                     continue;
@@ -80,7 +79,7 @@ public class MainRunningClass {
                     fileUtils.deleteDir(new File(backupDirectory));
                     // don't make delay and try again
                     wait = false;
-                } else if ((check >= 0) && (publishDirectory.list().length == 0)) {
+                } else if (Objects.requireNonNull(publishDirectory.list()).length == 0) {
                     logger.info("Publish directory is empty, publish first files");
                     String workingDir2 = String.valueOf(System.currentTimeMillis()-1000*60*60*24);
                     String newBackupDirectory = appProperties.getDirectoryBackup() + "/" + workingDir2;
@@ -148,7 +147,7 @@ public class MainRunningClass {
         //logger.info(appProperties.getDirectoryLiveChess());
         //logger.info(appProperties.getDirectoryBackup() + "/" + workingDir);
         FileUtils FileUtils = new FileUtils();
-        FileUtils.copy(srcDir, destDir);
+        FileUtils.copyOnlyPgn(srcDir, destDir);
 
         if(appProperties.getFtpOnlyPgn().equals("true") &&
                 appProperties.getDelayFinishedGames().equals("false")) {
@@ -157,62 +156,57 @@ public class MainRunningClass {
 
         File livechessDirectory = new File(appProperties.getDirectoryLiveChess());
         long lastModified = 0;
-        if(livechessDirectory.list().length >= 0) {
-            for(File file: livechessDirectory.listFiles()) {
-                if(file.lastModified() > lastModified) {
-                    lastModified = file.lastModified();
-                }
+        Objects.requireNonNull(livechessDirectory.list());
+        for (File file : Objects.requireNonNull(livechessDirectory.listFiles())) {
+            if (file.lastModified() > lastModified) {
+                lastModified = file.lastModified();
             }
-            if(lastModified > 0) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                logger.info("Livechess games.pgn dateTime: " + sdf.format(lastModified) + " #");
-            }
+        }
+        if(lastModified > 0) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            logger.info("Livechess games.pgn dateTime: " + sdf.format(lastModified) + " #");
         }
         SendInfo();
     }
 
     private void SendInfo() throws IOException {
-        try {
-            if (infoSend == false) {
-                String pgnFile = appProperties.getDirectoryLiveChess() + "/" + "games.pgn";
-                if (!new File(pgnFile).exists()) {
-                    //logger.info("games.pgn @@@@");
-                    return;
-                }
-
-                infoSend = true;
-
-                String pgnData = fileUtils.Read(pgnFile);
-
-                String round = pgnData.substring(pgnData.indexOf("[Round"));
-                round = round.substring(0, round.indexOf("]"));
-                round = round.replace("[Round \"", "");
-                round = round.replace("\"", "");
-
-                String event = pgnData.substring(pgnData.indexOf("[Event"));
-                event = event.substring(0, event.indexOf("]"));
-                event = event.replace("[Event \"", "");
-                event = event.replace("\"", "");
-
-                String date = pgnData.substring(pgnData.indexOf("[Date"));
-                date = date.substring(0, date.indexOf("]"));
-                date = date.replace("[Date \"", "");
-                date = date.replace("\"", "");
-
-                URL info = new URL("http://dgtdelay.jogo.sk/info.php?Round=" + URLEncoder.encode(round, "UTF-8")
-                        + "&Date=" + URLEncoder.encode(date, "UTF-8") + "&Event=" + URLEncoder.encode(event, "UTF-8") + "");
-                //logger.info(info.toString());
-                URLConnection connection = (URLConnection) info.openConnection();
-                //connection.setRequestMethod("GET");
-                InputStream response = connection.getInputStream();
-
-                //connection.setReadTimeout(15 * 1000);
-                //connection.connect();
-                //logger.info(info.toString());
-                //logger.info(String.valueOf(connection.getResponseCode()));
+        if (!infoSend) {
+            String pgnFile = appProperties.getDirectoryLiveChess() + "/" + "games.pgn";
+            if (!new File(pgnFile).exists()) {
+                //logger.info("games.pgn @@@@");
+                return;
             }
-        } finally {
 
+            infoSend = true;
+
+            String pgnData = fileUtils.Read(pgnFile);
+
+            String round = pgnData.substring(pgnData.indexOf("[Round"));
+            round = round.substring(0, round.indexOf("]"));
+            round = round.replace("[Round \"", "");
+            round = round.replace("\"", "");
+
+            String event = pgnData.substring(pgnData.indexOf("[Event"));
+            event = event.substring(0, event.indexOf("]"));
+            event = event.replace("[Event \"", "");
+            event = event.replace("\"", "");
+
+            String date = pgnData.substring(pgnData.indexOf("[Date"));
+            date = date.substring(0, date.indexOf("]"));
+            date = date.replace("[Date \"", "");
+            date = date.replace("\"", "");
+
+            URL info = new URL("http://dgtdelay.jogo.sk/info.php?Round=" + URLEncoder.encode(round, StandardCharsets.UTF_8)
+                    + "&Date=" + URLEncoder.encode(date, StandardCharsets.UTF_8) + "&Event=" + URLEncoder.encode(event, StandardCharsets.UTF_8));
+            //logger.info(info.toString());
+            URLConnection connection = info.openConnection();
+            //connection.setRequestMethod("GET");
+            InputStream response = connection.getInputStream();
+
+            //connection.setReadTimeout(15 * 1000);
+            //connection.connect();
+            //logger.info(info.toString());
+            //logger.info(String.valueOf(connection.getResponseCode()));
         }
     }
 
@@ -249,7 +243,7 @@ public class MainRunningClass {
         }
     }
 
-    private int checkDataFromLivechessFolder() throws IOException {
+    private int checkDataFromLivechessFolder() {
         String workingDirPgn = appProperties.getDirectoryBackup() + "/" + workingDir + "/games.pgn";
         int numberOfBoards = Integer.parseInt(appProperties.getBoardsNumber());
 
@@ -260,7 +254,7 @@ public class MainRunningClass {
     private void publishStream() throws IOException {
         // try to publish live pgn
         logger.info("Try to publish live pgn");
-        if(appProperties.getLivePgn().length() > 0) {
+        if(!appProperties.getLivePgn().isEmpty()) {
             try {
                 File publishDir = new File(appProperties.getDirectoryPublish());
                 logger.info("publish live pgn done");
@@ -291,11 +285,11 @@ public class MainRunningClass {
                     appProperties.getDelayFinishedGames().equals("false")) {
                 FileUtils.copy(finishedDir, publishDir);
                 int round = -1;
-                for (File file : publishDir.listFiles()) {
+                for (File file : Objects.requireNonNull(publishDir.listFiles())) {
                     if(file.getName().endsWith(".pgn")) {
                         for (int i = 1; i < 100; i++) {
 
-                            if (file.getName().startsWith(String.valueOf(i) + ".")) {
+                            if (file.getName().startsWith(i + ".")) {
                                 round = i;
                                 break;
                             }
@@ -308,7 +302,7 @@ public class MainRunningClass {
 
                 String allPgn = "";
                 for (int i = 1; i <= Integer.parseInt(appProperties.getBoardsNumber()); i++) {
-                    String pgn = fileUtils.Read(publishDir.getPath() + "/" + String.valueOf(round) + "." + String.valueOf(i) + ".pgn");
+                    String pgn = fileUtils.Read(publishDir.getPath() + "/" + round + "." + i + ".pgn");
                     allPgn = allPgn + pgn + "\n";
                 }
 
@@ -323,13 +317,14 @@ public class MainRunningClass {
     }
 
     private boolean findBackupDirectory() {
-        boolean found = false;
-        long timeStamp = System.currentTimeMillis() - Integer.parseInt(appProperties.getDelayGames())*1000;
+        boolean found;
+        long timeStamp = System.currentTimeMillis() - Integer.parseInt(appProperties.getDelayGames())* 1000L;
         String oldest = "";
 
         File backupDir = new File(appProperties.getDirectoryBackup());
         File[] fList = backupDir.listFiles();
 
+        assert fList != null;
         for (File file : fList) {
             if (file.isDirectory()) {
                 String dirName = file.getName();

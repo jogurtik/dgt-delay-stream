@@ -1,10 +1,10 @@
 package com.jogo.common;
 
 import com.jogo.MainRunningClass;
+import jakarta.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Named;
 import java.io.*;
 import java.nio.file.*;
 import java.util.Objects;
@@ -26,7 +26,7 @@ public class FileUtils {
             target.mkdir();
         }
 
-        for (String f : source.list()) {
+        for (String f : Objects.requireNonNull(source.list())) {
             copy(new File(source, f), new File(target, f));
         }
     }
@@ -40,10 +40,10 @@ public class FileUtils {
     }
 
     public void deleteAllInDir(File dir, File exceptFile) {
-        for(File file: dir.listFiles()) {
+        for(File file: Objects.requireNonNull(dir.listFiles())) {
             //logger.info(file.getPath());
             //logger.info(exceptFile.getPath());
-            if(!file.getPath().toString().equals(exceptFile.getPath().toString())) {
+            if(!file.getPath().equals(exceptFile.getPath())) {
                 //logger.info("DELETING");
                 deleteDir(file);
             }
@@ -62,7 +62,7 @@ public class FileUtils {
         if (dir.isDirectory())
         {
             String[] children = dir.list();
-            for (int i=0; i < children.length; i++) {
+            for (int i = 0; i < Objects.requireNonNull(children).length; i++) {
                 deleteDir(new File(dir, children[i]));
             }
 
@@ -76,19 +76,15 @@ public class FileUtils {
     }
 
     public String Read(String pgnFile) throws IOException {
-        String pgnData = "";
-        String line = null;
+        String line;
         StringBuilder  stringBuilder = new StringBuilder();
-        String ls = System.getProperty("line.separator");
+        String ls = System.lineSeparator();
 
-        BufferedReader reader = new BufferedReader(new FileReader(pgnFile));
-        try {
-            while((line = reader.readLine()) != null) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(pgnFile))) {
+            while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line);
                 stringBuilder.append(ls);
             }
-        } finally {
-            reader.close();
         }
 
         return stringBuilder.toString();
@@ -96,5 +92,25 @@ public class FileUtils {
 
     public void WriteToFile(String file, String content) throws IOException {
         Files.write( Paths.get(file), content.getBytes());
+    }
+
+    public void copyOnlyPgn(File source, File target) throws IOException {
+        if (!target.exists()) {
+            target.mkdir();
+        }
+            for (File file : Objects.requireNonNull(source.listFiles())) {
+                if (this.getFileExtension(file).equals(".pgn")) {
+                    copyFile(file, target);
+                }
+            }
+    }
+
+    private String getFileExtension(File file) {
+        String name = file.getName();
+        int lastIndexOf = name.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return ""; // empty extension
+        }
+        return name.substring(lastIndexOf);
     }
 }

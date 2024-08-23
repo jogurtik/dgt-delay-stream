@@ -1,17 +1,18 @@
 package com.jogo.common;
 
 import com.jogo.MainRunningClass;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 @Named
 public class FtpServer {
@@ -21,7 +22,6 @@ public class FtpServer {
     private AppProperties appProperties;
 
     private static final Logger logger = LoggerFactory.getLogger(MainRunningClass.class);
-    private static final int BUFFER_SIZE = 4096;
 
     public void uploadFiles(File file) throws IOException {
         FTPClient ftp = new FTPClient();
@@ -37,7 +37,7 @@ public class FtpServer {
         FTPClient ftp = new FTPClient();
 
         try {
-            for (File file : new File(appProperties.getDirectoryPublish()).listFiles()) {
+            for (File file : Objects.requireNonNull(new File(appProperties.getDirectoryPublish()).listFiles())) {
                 //logger.info("getFtpOnlyPgn: "+ appProperties.getFtpOnlyPgn());
                 if(appProperties.getFtpOnlyPgn().equals("true")) {
                     if(file.getName().equals("games.pgn")) {
@@ -68,7 +68,7 @@ public class FtpServer {
                 ftp.disconnect();
                 logger.error("FTP not disconnected");
             }
-            if (appProperties.getFtpActive() == "true") {
+            if (appProperties.getFtpActive().equals("true")) {
                 ftp.enterLocalActiveMode();
                 logger.debug("Entering active ftp mode");
             } else {
@@ -103,7 +103,7 @@ public class FtpServer {
             logger.debug("FTP publishing " + src.getAbsolutePath());
             ftp.makeDirectory(src.getName());
             ftp.changeWorkingDirectory(src.getName());
-            for (File file : src.listFiles()) {
+            for (File file : Objects.requireNonNull(src.listFiles())) {
                 upload(file, ftp);
             }
             ftp.changeToParentDirectory();

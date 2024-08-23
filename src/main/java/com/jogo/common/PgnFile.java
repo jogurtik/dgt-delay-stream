@@ -1,17 +1,15 @@
 package com.jogo.common;
 
 import com.jogo.MainRunningClass;
+import jakarta.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.inject.Named;
-import java.io.*;
 
 @Named
 public class PgnFile {
     private static final Logger logger = LoggerFactory.getLogger(MainRunningClass.class);
 
-    public int Check(String pgnFile, int boardNumber) throws IOException {
+    public int Check(String pgnFile, int boardNumber) {
         int fileIsOk = 0;
         String pgnData = "";
 
@@ -46,31 +44,27 @@ public class PgnFile {
 
     public void LogStatistic(String pgnData) {
         int count = pgnData.split("\\[Result \"\\*\"]", -1).length - 1;
-        String str = "Playing " + String.valueOf(count) + " # ";
+        String str = "Playing " + count + " # ";
         count = pgnData.split("\\[Result \"1-0\"]", -1).length - 1;
-        str += "White win " + String.valueOf(count) + " # ";
+        str += "White win " + count + " # ";
         count = pgnData.split("\\[Result \"1/2-1/2\"]", -1).length - 1;
-        str += "Draw " + String.valueOf(count) + " # ";
+        str += "Draw " + count + " # ";
         count = pgnData.split("\\[Result \"0-1\"]", -1).length - 1;
-        str += "Black win " + String.valueOf(count) + " # ";
+        str += "Black win " + count + " # ";
 
         logger.info(str);
     }
 
     public boolean CheckAllFinished(String pgnData) {
-        boolean allFinished = true;
-        if(pgnData.contains("[Result \"*\"]")) {
-            allFinished = false;
-        }
-
-        return allFinished;
+        return !pgnData.contains("[Result \"*\"]");
     }
 
     private boolean CheckPgnBoards(String pgnData, int boardNumber) {
         boolean found = false;
         for (int i = 1; i < 100; i++) {
-            if(pgnData.contains("[Round \""+String.valueOf(i)+"."+ toString().valueOf(boardNumber)+"\"]")) {
+            if (pgnData.contains("[Round \"" + i + "." + boardNumber + "\"]")) {
                 found = true;
+                break;
             }
         }
         return found;
