@@ -156,6 +156,19 @@ Second one:
 
 <h2>Changes</h2>
 <ul>
+version 3.0.0:
+<li>Updating to Java 21</li>
+<li>Updating to spring boot 3.3.3</li>
+<li>Updating dependences</li>
+<li>By creating backup direcotory copy just .pgn files. Fewer chance to have lock by livechess</li>
+<li>Major changes, creating version 3.0.0</li>
+</ul>
+
+<ul>
+version 2.1.0:
+</ul>
+
+<ul>
 version 2.0.0:
 <li>if still nothing was published (publish folder is empty), current livechess upload will be uploaded</li>
 <li>if all games are finished, current livechess upload will be uploaded (is possible to change in property file)</li>
