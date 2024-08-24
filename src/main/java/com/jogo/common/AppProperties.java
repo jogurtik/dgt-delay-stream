@@ -234,7 +234,4 @@ public class AppProperties {
 
     @Value("${live.pgn}")
     private String livePgn;
-
-    @Value("${console.output}")
-    private String consoleOutput;
 }

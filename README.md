@@ -131,7 +131,6 @@ Second one:
 <li>ftp.onlypgn - if value is true, only games.pgn file will be checked and uploaded to ftp server. This can be usefull by streams which are using only pgn file for streaming</li>  
 <li>ftp.directory - ftp directory can be set to any subdirectory on ftp server</li>
 <li>live.pgn - when you are delaying stream, you can put also on ftp live stream for commentary</li>
-<li>console.output - how much of logs shall go to console</li>
 </ul>
 
 
