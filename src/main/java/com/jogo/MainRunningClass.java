@@ -35,6 +35,7 @@ public class MainRunningClass {
     private FileUtils fileUtils;
 
     private Boolean infoSend;
+    private Boolean noChange;
 
     // Timestamps
     // https://www.mkyong.com/java/how-to-get-current-timestamps-in-java/
@@ -46,9 +47,10 @@ public class MainRunningClass {
         fileUtils = new FileUtils();
 
         while (true) {
+            logger.info("-----------------------------------------------------");
             deleteAll = false;
             wait = true;
-            logger.info("=== Start of loop in " + new java.io.File( "." ).getCanonicalPath() + " === ");
+            // logger.info("=== Start of loop in " + new java.io.File( "." ).getCanonicalPath() + " === ");
             try {
                 // get directory timestamp name
                 workingDir = String.valueOf(System.currentTimeMillis());
@@ -140,9 +142,53 @@ public class MainRunningClass {
         return false;
     }
 
+    public boolean checkIfWeShallCreateBackupUrl(String pgnFile) throws IOException {
+        if (!new File(pgnFile).exists()) {
+            //logger.info("games.pgn @@@@");
+            this.noChange = false;
+            return true;
+        }
+        String pgnData = fileUtils.Read(pgnFile);
+
+        File backupDir = new File(appProperties.getDirectoryBackup());
+        File[] fList = backupDir.listFiles();
+        long lastModifiedTime = Long.MIN_VALUE;
+        File chosenFile = null;
+
+        assert fList != null;
+        for (File file : fList) {
+            if (file.isDirectory()) {
+                if (file.lastModified() > lastModifiedTime) {
+                    chosenFile = file;
+                    lastModifiedTime = file.lastModified();
+                }
+            }
+        }
+
+        String pgnDataLast = "";
+        try {
+            pgnDataLast = fileUtils.Read(chosenFile.getPath() + "\\games.pgn");
+        } catch (Exception ex) {
+            this.noChange = false;
+            return true;
+        }
+
+        if (!pgnDataLast.equals(pgnData)) {
+            this.noChange = false;
+            return true;
+        }
+        this.noChange = true;
+        return false;
+    }
+
     private void getDataFromLivechessFolder() throws IOException {
+        if (!checkIfWeShallCreateBackupUrl(appProperties.getDirectoryLiveChess() + "/" + "games.pgn")) {
+            return;
+        }
+
         File srcDir = new File(appProperties.getDirectoryLiveChess());
         File destDir = new File(appProperties.getDirectoryBackup() + "/" + workingDir);
+        logger.info("getDataFromLivechessFolder " + srcDir);
 
         //logger.info(appProperties.getDirectoryLiveChess());
         //logger.info(appProperties.getDirectoryBackup() + "/" + workingDir);
@@ -253,22 +299,26 @@ public class MainRunningClass {
 
     private void publishStream() throws IOException {
         // try to publish live pgn
-        logger.info("Try to publish live pgn");
-        if(!appProperties.getLivePgn().isEmpty()) {
-            try {
-                File publishDir = new File(appProperties.getDirectoryPublish());
-                logger.info("publish live pgn done");
-                fileUtils.copy(new File(appProperties.getDirectoryLiveChess() + "/games.pgn"),
-                        new File(publishDir.getPath() + "/" + appProperties.getLivePgn() + ".pgn"));
-                if(!appProperties.getFtpServer().isEmpty()) {
-                    logger.info("Publishing live pgn to ftp server");
-                    ftpServer.uploadFiles(new File(publishDir.getPath() + "/" + appProperties.getLivePgn() + ".pgn"));
+        //logger.info("Try to publish TV pgn to ftp server");
+        if (!this.noChange) {
+            if (!appProperties.getLivePgn().isEmpty()) {
+                try {
+                    File publishDir = new File(appProperties.getDirectoryPublish());
+                    //logger.info("publish TV pgn to ftp server");
+                    fileUtils.copy(new File(appProperties.getDirectoryLiveChess() + "/games.pgn"),
+                            new File(publishDir.getPath() + "/" + appProperties.getLivePgn() + ".pgn"));
+                    if (!appProperties.getFtpServer().isEmpty()) {
+                        logger.info("publish TV pgn to ftp server " + publishDir.getPath() + "/" + appProperties.getLivePgn() + ".pgn");
+                        ftpServer.uploadFiles(new File(publishDir.getPath() + "/" + appProperties.getLivePgn() + ".pgn"));
+                    }
+                } catch (Exception ex) {
+                    logger.error("publish TV pgn to ftp servier failed");
                 }
-            } catch (Exception ex) {
-                logger.error("Try to publish live pgn failed");
+            } else {
+                logger.info("publish TV pgn to ftp servier disabled");
             }
         } else {
-            logger.info("publish live pgn disabled");
+            logger.info("publish TV pgn to ftp servier disabled, while tv.pgn not changed since last upload");
         }
 
         while (findBackupDirectory()) {

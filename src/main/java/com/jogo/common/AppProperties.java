@@ -37,7 +37,7 @@ public class AppProperties {
             Path currentRelativePath = Paths.get("");
             dir = currentRelativePath.toAbsolutePath().toString() + "\\" + defaultVal;
         }
-        logger.info("@"+dir+"@");
+        logger.debug("@"+dir+"@");
         return dir;
     }
 
@@ -234,4 +234,7 @@ public class AppProperties {
 
     @Value("${live.pgn}")
     private String livePgn;
+
+    @Value("${console.output}")
+    private String consoleOutput;
 }

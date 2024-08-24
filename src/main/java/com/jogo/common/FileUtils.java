@@ -100,7 +100,7 @@ public class FileUtils {
         }
             for (File file : Objects.requireNonNull(source.listFiles())) {
                 if (this.getFileExtension(file).equals(".pgn")) {
-                    copyFile(file, target);
+                    copyFile(file, new File(target + "\\" + file.getName()));
                 }
             }
     }

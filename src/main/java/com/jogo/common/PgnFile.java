@@ -32,7 +32,7 @@ public class PgnFile {
                 fileIsOk = 2;
             }
         } catch (Exception ex){
-            logger.error("PGN file not found - " + ex.getMessage());
+            //logger.error("PGN file not found - " + ex.getMessage());
             fileIsOk = 1;
         }
 

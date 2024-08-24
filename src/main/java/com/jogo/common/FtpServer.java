@@ -41,6 +41,7 @@ public class FtpServer {
                 //logger.info("getFtpOnlyPgn: "+ appProperties.getFtpOnlyPgn());
                 if(appProperties.getFtpOnlyPgn().equals("true")) {
                     if(file.getName().equals("games.pgn")) {
+                        logger.info("uploading pgn file to server: " + file.getName());
                         upload(file, ftp);
                     }
 
@@ -57,7 +58,7 @@ public class FtpServer {
     private void Disconnect(FTPClient ftp) throws IOException {
         if(ftp.isConnected()) {
             ftp.disconnect();
-            logger.info("FTP disconnected");
+            //logger.info("FTP disconnected");
         }
     }
 
@@ -66,14 +67,14 @@ public class FtpServer {
             ftp.connect(appProperties.getFtpServer());
             if (!FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
                 ftp.disconnect();
-                logger.error("FTP not disconnected");
+                //logger.error("FTP not disconnected");
             }
             if (appProperties.getFtpActive().equals("true")) {
                 ftp.enterLocalActiveMode();
-                logger.debug("Entering active ftp mode");
+                //logger.debug("Entering active ftp mode");
             } else {
                 ftp.enterLocalPassiveMode();
-                logger.debug("Entering passive ftp mode");
+                //logger.debug("Entering passive ftp mode");
             }
 
             ftp.login(appProperties.getFtpLogin(), appProperties.getFtpPassword());
