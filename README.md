@@ -99,6 +99,7 @@ Second one:
 <h2>Requirements:</h2>
 <ol>
 <li>Java 1.8 and higher</li>
+<li>!Important!!! From version 3 OpenJDK 21 and higher</li>
 <li>DGT Livechess</li>
 <li>FTP connection settings to webserver</li>
 <li>FTP Server on localhost (Second scenario)</li>
