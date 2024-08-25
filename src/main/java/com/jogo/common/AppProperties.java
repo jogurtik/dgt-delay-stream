@@ -42,98 +42,97 @@ public class AppProperties {
     }
 
     public String getDirectoryPublish() {
-
-        return CheckDirectory(directoryPublish, "Publish");
+        return CheckDirectory(directoryPublish, "Publish").trim();
     }
 
     public void setDirectoryPublish(String directoryPublish) {
-        this.directoryPublish = ConvertDirectoryString(directoryPublish);
+        this.directoryPublish = ConvertDirectoryString(directoryPublish.trim());
     }
 
     public String getDirectoryLiveChess() {
-        return CheckDirectory(directoryLiveChess, "LiveChess");
+        return CheckDirectory(directoryLiveChess, "LiveChess").trim();
     }
 
     public void setDirectoryLiveChess(String directoryLiveChess) {
-        this.directoryLiveChess = ConvertDirectoryString(directoryLiveChess);
+        this.directoryLiveChess = ConvertDirectoryString(directoryLiveChess.trim());
     }
 
     public String getDirectoryBackup() {
-        return CheckDirectory(directoryBackup, "Backup");
+        return CheckDirectory(directoryBackup, "Backup").trim();
     }
 
     public void setDirectoryBackup(String directoryBackup) {
-        this.directoryBackup = ConvertDirectoryString(directoryBackup);
+        this.directoryBackup = ConvertDirectoryString(directoryBackup.trim());
     }
 
     public String getDirectoryFinished() {
-        return CheckDirectory(directoryFinished, "Finished");
+        return CheckDirectory(directoryFinished, "Finished").trim();
     }
 
     public void setDirectoryFinished(String directoryFinished) {
-        this.directoryFinished = ConvertDirectoryString(directoryFinished);
+        this.directoryFinished = ConvertDirectoryString(directoryFinished.trim());
 
     }
 
 
     public String getBoardsNumber() {
-        return boardsNumber;
+        return boardsNumber.trim();
     }
 
     public void setBoardsNumber(String boardsNumber) {
-        this.boardsNumber = boardsNumber;
+        this.boardsNumber = boardsNumber.trim();
     }
 
     public String getDelayGames() {
-        return delayGames;
+        return delayGames.trim();
     }
 
     public void setDelayGames(String delayGames) {
-        this.delayGames = delayGames;
+        this.delayGames = delayGames.trim();
     }
 
     public String getRefreshInterval() {
-        return refreshInterval;
+        return refreshInterval.trim();
     }
 
     public void setRefreshInterval(String refreshInterval) {
-        this.refreshInterval = refreshInterval;
+        this.refreshInterval = refreshInterval.trim();
     }
 
     public String getFtpServer() {
-        return ftpServer;
+        return ftpServer.trim();
     }
 
     public void setFtpServer(String ftpServer) {
-        this.ftpServer = ftpServer;
+        this.ftpServer = ftpServer.trim();
     }
 
     public String getFtpLogin() {
-        return ftpLogin;
+        return ftpLogin.trim();
     }
 
     public void setFtpLogin(String ftpLogin) {
-        this.ftpLogin = ftpLogin;
+        this.ftpLogin = ftpLogin.trim();
     }
 
     public String getFtpPassword() {
-        return ftpPassword;
+        return ftpPassword.trim();
     }
 
     public void setFtpPassword(String ftpPassword) {
-        this.ftpPassword = ftpPassword;
+        this.ftpPassword = ftpPassword.trim();
     }
 
     public String getFtpActive() {
-        return ftpActive;
+        return ftpActive.trim();
     }
 
     public void setFtpActive(String ftpActive) {
-        this.ftpActive = ftpActive;
+        this.ftpActive = ftpActive.trim();
     }
 
     public String getFtpOnlyPgn() {
-        return ftpOnlyPgn;
+        return ftpOnlyPgn.trim();
     }
 
     public void setFtpOnlyPgn(String ftpOnlyPgn) {
@@ -141,47 +140,47 @@ public class AppProperties {
             ftpOnlyPgn = ftpOnlyPgn.replace("\\", "/");
             ftpOnlyPgn = ftpOnlyPgn.replace("//", "/");
         }
-        this.ftpOnlyPgn = ftpOnlyPgn;
+        this.ftpOnlyPgn = ftpOnlyPgn.trim();
     }
 
     public String getFtpDirectory() {
-        return ftpDirectory;
+        return ftpDirectory.trim();
     }
 
     public void setFtpDirectory(String ftpDirectory) {
-        this.ftpDirectory = ftpDirectory;
+        this.ftpDirectory = ftpDirectory.trim();
     }
 
     public String getDelayFinishedGames() {
-        return delayFinishedGames;
+        return delayFinishedGames.trim();
     }
 
     public void setDelayFinishedGames(String delayFinishedGames) {
-        this.delayFinishedGames = delayFinishedGames;
+        this.delayFinishedGames = delayFinishedGames.trim();
     }
 
     public String getDelayFinishedRound() {
-        return delayFinishedRound;
+        return delayFinishedRound.trim();
     }
 
     public void setDelayFinishedRound(String delayFinishedRound) {
-        this.delayFinishedRound = delayFinishedRound;
+        this.delayFinishedRound = delayFinishedRound.trim();
     }
 
     public String getDelayGamesDefine() {
-        return delayGamesDefine;
+        return delayGamesDefine.trim();
     }
 
     public void setDelayGamesDefine(String delayGamesDefine) {
-        this.delayGamesDefine = delayGamesDefine;
+        this.delayGamesDefine = delayGamesDefine.trim();
     }
 
     public String getLivePgn() {
-        return livePgn;
+        return livePgn.trim();
     }
 
     public void setLivePgn(String livePgn) {
-        this.livePgn = livePgn;
+        this.livePgn = livePgn.trim();
     }
 
     @Value("${directory.publish}")
