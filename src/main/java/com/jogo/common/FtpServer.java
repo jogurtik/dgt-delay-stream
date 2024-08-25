@@ -46,6 +46,7 @@ public class FtpServer {
                     }
 
                 } else {
+                    logger.info("uploading pgn file to server: " + file.getName());
                     upload(file, ftp);
                 }
             }

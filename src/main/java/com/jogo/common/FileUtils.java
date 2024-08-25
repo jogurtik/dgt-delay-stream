@@ -40,12 +40,14 @@ public class FileUtils {
     }
 
     public void deleteAllInDir(File dir, File exceptFile) {
-        for(File file: Objects.requireNonNull(dir.listFiles())) {
-            //logger.info(file.getPath());
-            //logger.info(exceptFile.getPath());
-            if(!file.getPath().equals(exceptFile.getPath())) {
-                //logger.info("DELETING");
-                deleteDir(file);
+        if (exceptFile != null) {
+            for (File file : Objects.requireNonNull(dir.listFiles())) {
+                //logger.info(file.getPath());
+                //logger.info(exceptFile.getPath());
+                if (!file.getPath().equals(exceptFile.getPath())) {
+                    //logger.info("DELETING");
+                    deleteDir(file);
+                }
             }
         }
     }
