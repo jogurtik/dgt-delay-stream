@@ -158,11 +158,11 @@ Second one:
 <h2>Changes</h2>
 <ul>
 version 3.0.0:
-<li>Updating to Java 21</li>
+<li>Updating from Java 1.8 to Open JDK 21</li>
 <li>Updating to spring boot 3.3.3</li>
 <li>Updating dependences</li>
 <li>By creating backup direcotory copy just .pgn files. Fewer chance to have lock by livechess</li>
-<li>Major changes, creating version 3.0.0</li>
+<li>A lot of small changes and known fixes</li>
 </ul>
 
 <ul>
