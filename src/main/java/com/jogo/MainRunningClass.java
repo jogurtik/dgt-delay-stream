@@ -106,7 +106,10 @@ public class MainRunningClass {
                 }
                 if(Arrays.stream(Objects.requireNonNull(new File(appProperties.getDirectoryBackup()).listFiles())).findAny().isEmpty()) {
                     if (appProperties.getDelayFinishedRound().equals("true")) {
-                        deleteAll = true;
+                        int count = lastPgnData.split("\\[Result \"\\*\"]", -1).length - 1;
+                        if (count == 0) {
+                            deleteAll = true;
+                        }
                     }
                 }
                 // try to copy data from backup folder to publish folder
@@ -127,6 +130,7 @@ public class MainRunningClass {
                 waitConfiguredTime();
             }
         }
+
         System.exit(0);
     }
 
