@@ -98,8 +98,7 @@ Second one:
 
 <h2>Requirements:</h2>
 <ol>
-<li>Java 1.8 and higher</li>
-<li>!Important!!! From version 3 OpenJDK 21 and higher</li>
+<li>OpenJDK 21 and higher (for version 1.X and 2.X Java 1.8)</li>
 <li>DGT Livechess</li>
 <li>FTP connection settings to webserver</li>
 <li>FTP Server on localhost (Second scenario)</li>
@@ -159,11 +158,11 @@ Second one:
 <h2>Changes</h2>
 <ul>
 version 3.0.0:
-<li>Updating to Java 21</li>
+<li>Updating from Java 1.8 to Open JDK 21</li>
 <li>Updating to spring boot 3.3.3</li>
 <li>Updating dependences</li>
 <li>By creating backup direcotory copy just .pgn files. Fewer chance to have lock by livechess</li>
-<li>Major changes, creating version 3.0.0</li>
+<li>A lot of small changes and known fixes</li>
 </ul>
 
 <ul>
